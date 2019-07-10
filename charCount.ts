@@ -1,4 +1,4 @@
-import { toLower, reduce, pipe } from "ramda";
+import { toLower, reduce, pipe, values } from "ramda";
 
 type numObj = { [x: string]: number };
 
@@ -27,11 +27,16 @@ const isAlphaNumeric = (char: string) => {
   );
 };
 
+const strToArr = (str: string) => str.split("");
+
 const charCount = (str: string): numObj =>
   reduce(
     (acc, val) => (isAlphaNumeric(val) ? incrementObjKey(acc, val) : acc),
     {},
-    [...toLower(str)]
+    pipe(
+      toLower,
+      strToArr
+    )(str)
   );
 
 console.log(charCount("Hello world!"));
