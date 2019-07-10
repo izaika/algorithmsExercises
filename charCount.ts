@@ -1,4 +1,4 @@
-import { toLower, reduce } from "ramda";
+import { toLower, reduce, pipe } from "ramda";
 
 type numObj = { [x: string]: number };
 
@@ -7,11 +7,29 @@ const incrementObjKey = (obj: numObj, key: string): numObj => ({
   [key]: ++obj[key] || 1
 });
 
-const isCharValid = (char: string) => /[a-z0-9]/.test(char);
+const charCode = (char: string) => char.charCodeAt(0);
+
+const isBetweenCreator = (num: number) => (
+  rangeStart: number,
+  rangeEnd: number
+) => num > rangeStart && num < rangeEnd;
+
+const isAlphaNumeric = (char: string) => {
+  const isBetween = pipe(
+    charCode,
+    isBetweenCreator
+  )(char);
+
+  return (
+    isBetween(47, 58) || // numeric (0-9)
+    isBetween(64, 91) || // upper alpha (A-Z)
+    isBetween(96, 123) // lower alpha (a-z)
+  );
+};
 
 const charCount = (str: string): numObj =>
   reduce(
-    (acc, val) => (isCharValid(val) ? incrementObjKey(acc, val) : acc),
+    (acc, val) => (isAlphaNumeric(val) ? incrementObjKey(acc, val) : acc),
     {},
     [...toLower(str)]
   );
