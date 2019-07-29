@@ -1,4 +1,4 @@
-import { toLower, reduce, pipe, values } from "ramda";
+import { toLower, reduce, pipe } from "ramda";
 
 type numObj = { [x: string]: number };
 
