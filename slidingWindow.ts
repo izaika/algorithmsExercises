@@ -44,17 +44,17 @@ const myMaxSubArraySum2: TMaxSubArraySum = (arr, size) => {
 
   const initialSum = sumValuesInArr(arr.slice(0, size));
 
-  return arr.reduce(
+  return arr.slice(size, arr.length).reduce(
     (acc, val, i) => {
-      if (i < size) return acc;
+      const index = i + size;
 
-      const { previousSum, maxSum } = acc;
-      const nextSum = previousSum - arr[i - size] + val;
+      const [prevSum, maxSum] = acc;
+      const nextSum = prevSum - arr[index - size] + val;
 
-      return { previousSum: nextSum, maxSum: Math.max(nextSum, maxSum) };
+      return [nextSum, Math.max(nextSum, maxSum)];
     },
-    { previousSum: initialSum, maxSum: initialSum }
-  ).maxSum;
+    [initialSum, initialSum]
+  )[1];
 };
 
 console.log(myMaxSubArraySum2([1, 2, 5, 2, 8, 1, 5], 2)); // 10
