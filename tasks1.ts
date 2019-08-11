@@ -4,7 +4,7 @@ interface ICounter {
 
 const numToArr = (num: number) => [...num.toString()];
 
-const getCounter = (arr: string[]) =>
+const getCounter = (arr: Array<string | number>) =>
   arr.reduce<ICounter>((counter, char) => {
     counter[char] = counter[char] + 1 || 1;
     return counter;
@@ -24,4 +24,5 @@ const sameFrequency = (num1: number, num2: number): boolean => {
   );
 };
 
-console.log(sameFrequency(182, 281));
+const areThereDuplicates = (...args: Array<string | number>): boolean =>
+  Object.entries(getCounter(args)).some(([_, value]) => value !== 1);
