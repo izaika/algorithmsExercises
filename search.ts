@@ -35,33 +35,19 @@ const binarySearch = (arr: number[], val: number) => {
 //   return -1;
 // };
 
-console.log(binarySearch([1, 2, 3, 4, 5], 5));
+// const countSubstr = (str: string, substr: string) =>
+//   str.split(substr).length - 1;
 
-// console.log(
-//   binarySearch(
-//     [
-//       5,
-//       6,
-//       10,
-//       13,
-//       14,
-//       18,
-//       30,
-//       34,
-//       35,
-//       37,
-//       40,
-//       44,
-//       64,
-//       79,
-//       84,
-//       86,
-//       95,
-//       96,
-//       98,
-//       99
-//     ],
-//     10
-//   )
-// ); // 2
-// 'binarySearch([5, 6, 10, 13, 14, 18, 30, 34, 35, 37, 40, 44, 64, 79, 84, 86, 95, 96, 98, 99], 95) should be 16.'.
+const countSubstr = (str: string, substr: string) => {
+  const substrLength = substr.length;
+  let hits = 0;
+
+  for (let i = 0; i <= str.length - substrLength; i++) {
+    console.log(str.slice(i, i + substrLength), substr);
+    if (str.slice(i, i + substrLength) === substr) hits++;
+  }
+
+  return hits;
+};
+
+console.log(countSubstr("wowomgzomg", "omg"));
