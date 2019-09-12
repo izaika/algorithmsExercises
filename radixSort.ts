@@ -11,4 +11,18 @@ const getDigit = (num: number, i: number) =>
 const countDigits = (num: number) =>
   num === 0 ? 1 : Math.floor(Math.log10(Math.abs(num))) + 1;
 
-console.log(getDigit(123, 1));
+const mostDigits = (nums: number[]) => countDigits(Math.max(...nums));
+
+const radixSort = (nums: number[]) => {
+  let maxDigitCount = mostDigits(nums);
+  for (let k = 0; k < maxDigitCount; k++) {
+    const digitBuckets = Array.from({ length: 10 }, () => []);
+    for (let i = 0; i < nums.length; i++) {
+      digitBuckets[getDigit(nums[i], k)].push(nums[i]);
+    }
+    nums = [].concat(...digitBuckets);
+  }
+  return nums;
+};
+
+console.log(radixSort([23, 345, 5467, 12, 2345, 9852]));
