@@ -13,14 +13,15 @@ class SinglyLinkedList {
 
   push = (val: any) => {
     const newNode = new ListNode(val);
-    this.length++;
 
-    if (!this.head) {
-      this.head = this.tail = newNode;
-    } else {
+    if (this.head) {
       this.tail.next = newNode;
       this.tail = newNode;
+    } else {
+      this.head = this.tail = newNode;
     }
+
+    this.length++;
 
     return this;
   };
@@ -45,6 +46,31 @@ class SinglyLinkedList {
     return current;
   };
 
+  unshift = (val: any) => {
+    const newNode = new ListNode(val);
+
+    if (this.head) {
+      newNode.next = this.head;
+      this.head = newNode;
+    } else {
+      this.head = this.tail = newNode;
+    }
+
+    this.length++;
+    return this;
+  };
+
+  shift = () => {
+    if (!this.length) return;
+
+    const { head } = this;
+    this.head = head.next;
+    this.length--;
+    if (!this.length) this.tail = null;
+
+    return head;
+  };
+
   traverse = () => {
     let current = this.head;
 
@@ -61,3 +87,6 @@ list
   .push("there")
   .push("test")
   .push("Goodbye!");
+
+log(list.unshift(123));
+log(list);
