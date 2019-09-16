@@ -71,6 +71,25 @@ class SinglyLinkedList {
     return head;
   };
 
+  get = (index: number) => {
+    if (index < 0 || index >= this.length) return;
+
+    let counter = 0;
+    let current = this.head;
+    while (counter !== index) {
+      current = current.next;
+      counter++;
+    }
+    return current;
+  };
+
+  set = (index: number, val: any) => {
+    const node = this.get(index);
+    if (!node) return false;
+    node.val = val;
+    return true;
+  };
+
   traverse = () => {
     let current = this.head;
 
@@ -88,5 +107,5 @@ list
   .push("test")
   .push("Goodbye!");
 
-log(list.unshift(123));
+list.set(2, "ttttttest");
 log(list);
