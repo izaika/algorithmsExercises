@@ -41,7 +41,7 @@ class SinglyLinkedList {
     this.tail = pre;
     this.length--;
 
-    if (!this.length) this.head = this.tail = null;
+    this.resetIfEmpty();
 
     return current;
   };
@@ -66,7 +66,7 @@ class SinglyLinkedList {
     const { head } = this;
     this.head = head.next;
     this.length--;
-    if (!this.length) this.tail = null;
+    this.resetIfEmpty();
 
     return head;
   };
@@ -90,6 +90,50 @@ class SinglyLinkedList {
     return true;
   };
 
+  insert = (index: number, val: any): boolean => {
+    if (index < 0 || index > this.length) return false;
+    if (index === this.length) return !!this.push(val);
+    if (index === 0) return !!this.unshift(val);
+
+    const newNode = new ListNode(val);
+    const prevNode = this.get(index - 1);
+
+    newNode.next = prevNode.next;
+    prevNode.next = newNode;
+    this.length++;
+    return true;
+  };
+
+  remove = (index: number): ListNode => {
+    if (index < 0 || index >= this.length) return;
+    if (index === this.length - 1) return this.pop();
+    if (index === 0) return this.shift();
+
+    const prevNode = this.get(index - 1);
+    const removedNode = prevNode.next;
+    prevNode.next = removedNode.next;
+    this.length--;
+    this.resetIfEmpty();
+    return removedNode;
+  };
+
+  reverse = () => {
+    if (!this.length) return this;
+
+    let node = this.head;
+    this.head = this.tail;
+    this.tail = node;
+
+    let prev: ListNode = null;
+    let next: ListNode = null;
+    for (let i = 0; i < this.length; i++) {
+      next = node.next;
+      node.next = prev;
+      prev = node;
+      node = next;
+    }
+  };
+
   traverse = () => {
     let current = this.head;
 
@@ -97,6 +141,10 @@ class SinglyLinkedList {
       console.log(current.val);
       current = current.next;
     }
+  };
+
+  private resetIfEmpty = () => {
+    if (!this.length) this.head = this.tail = null;
   };
 }
 
@@ -107,5 +155,7 @@ list
   .push("test")
   .push("Goodbye!");
 
-list.set(2, "ttttttest");
-log(list);
+list.traverse();
+list.reverse();
+console.log("reversing................");
+list.traverse();
