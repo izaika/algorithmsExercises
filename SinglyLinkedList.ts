@@ -1,5 +1,3 @@
-import { log } from "./uitls";
-
 class ListNode {
   next: ListNode = null;
 
