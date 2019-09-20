@@ -68,13 +68,42 @@ namespace DoublyLinkedList {
       this.length--;
       return removedNode;
     };
+
+    get = (index: number) => {
+      if (index < 0 || index >= this.length) return;
+      let count, current;
+      if (index <= this.length / 2) {
+        count = 0;
+        current = this.head;
+        while (count !== index) {
+          current = current.next;
+          count++;
+        }
+      } else {
+        count = this.length - 1;
+        current = this.tail;
+        while (count !== index) {
+          current = current.prev;
+          count--;
+        }
+      }
+
+      return current;
+    };
+
+    set = (index: number, val: any) => {
+      const node = this.get(index);
+      if (!node) return false;
+      node.val = val;
+      return true;
+    };
   }
 
   const list = new DoublyLinkedList();
   list.push(99);
   list.push(100);
   list.push("last item");
-
   list.unshift(98);
+
   log(list);
 }
